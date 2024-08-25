@@ -12,7 +12,12 @@ const CardPizza = ({ name, price, ingredients, img }) => {
           <strong>Price:</strong> ${price.toFixed(2)}
         </Card.Text>
         <Card.Text>
-          <strong>Ingredients:</strong> {ingredients.join(', ')}
+          <strong>Ingredients:</strong>
+          <ul>
+            {ingredients.map((ingredient, index) => (
+              <li key={index}>{ingredient}</li>
+            ))}
+          </ul>
         </Card.Text>
         <div className="d-flex justify-content-between">
           <Button variant="outline-secondary" size="sm">Add to Cart</Button>
