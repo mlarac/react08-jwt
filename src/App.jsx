@@ -7,6 +7,7 @@ import { Footer } from "./components/Footer";
 import Header from "./components/Header";
 //import { Login } from "./components/Login";
 //import { Register } from "./components/Register";
+import Cart from './components/Cart'
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
       <Home />
       {/* <Register /> */}
       {/* <Login /> */}
+      <Cart />
       <Footer/>
     
     </>
