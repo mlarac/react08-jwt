@@ -2,7 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
-const CardItem = ({ name, price, ingredients, img }) => {
+const CardPizza = ({ name, price, ingredients, img }) => {
   return (
     <Card style={{ width: '18rem' }} className="mb-4">
       <Card.Img variant="top" src={img} />
@@ -23,4 +23,4 @@ const CardItem = ({ name, price, ingredients, img }) => {
   );
 };
 
-export default CardItem;
+export default CardPizza;
