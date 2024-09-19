@@ -12,10 +12,12 @@ import Cart from './pages/Cart';
 import Pizza from "./pages/Pizza";
 //import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound"; 
+import CartProvider from "./context/Cartcontext";
 
 function App() {
   return (
    <>
+   <CartProvider>
       <NavigationBar />
       <Header text="Bienvenido a Pizzería Mamma Mia!" />
       
@@ -46,6 +48,7 @@ function App() {
       </Routes>
       
       <Footer />
+      </CartProvider>
       </>
   );
 }
