@@ -2,7 +2,7 @@ import React from 'react';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
-const CardPizza = ({ name, price, ingredients, img }) => {
+const CardPizza = ({ name, price, ingredients, img, addToCart }) => {
   return (
     <Card style={{ width: '18rem' }} className="mb-4">
       <Card.Img variant="top" src={img} />
@@ -20,7 +20,13 @@ const CardPizza = ({ name, price, ingredients, img }) => {
           </ul>
         </Card.Text>
         <div className="d-flex justify-content-between">
-          <Button variant="outline-secondary" size="sm">Add to Cart</Button>
+          <Button
+            variant="outline-secondary"
+            size="sm"
+            onClick={addToCart} // Añadimos la función addToCart aquí
+          >
+            Add to Cart
+          </Button>
           <Button variant="outline-secondary" size="sm">View More</Button>
         </div>
       </Card.Body>
