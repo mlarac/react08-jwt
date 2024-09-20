@@ -1,13 +1,15 @@
-import React from 'react';
+import {React, useContext} from 'react';
 import { Link } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
-import { formatCurrency } from '../utils/formatCurrency';
+//import { formatCurrency } from '../utils/formatCurrency';
+import { CartContext } from '../context/CartContext2';
 
 export const NavigationBar = () => {
-  const total = 25000; // Cambia esto a otro valor para probar
+ // const total = 25000; // Cambia esto a otro valor para probar
+  const { calculateTotal } = useContext(CartContext);
   const token = false; // Cambia esto a true para simular que el usuario está logueado
 
   return (
@@ -33,7 +35,7 @@ export const NavigationBar = () => {
           {/* Alinear a la derecha */}
           <Nav className="ms-auto">
             <Button variant="outline-light" as={Link} to="/cart">
-              🛒 Total: {formatCurrency(total)}
+              🛒 Total: ${calculateTotal()}
             </Button>
           </Nav>
         </Navbar.Collapse>
