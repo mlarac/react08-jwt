@@ -18,6 +18,9 @@ function App() {
   return (
    <>
    <CartProvider>
+   <UserProvider>
+      <NavigationBar />
+     
       <NavigationBar />
       <Header text="Bienvenido a Pizzería Mamma Mia!" />
       
@@ -48,6 +51,7 @@ function App() {
       </Routes>
       
       <Footer />
+      </UserProvider>
       </CartProvider>
       </>
   );
