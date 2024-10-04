@@ -1,5 +1,5 @@
 import React from 'react';
-import { useCart } from '../context/CartContext';
+import { useCart } from '../context/Cartcontext';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 

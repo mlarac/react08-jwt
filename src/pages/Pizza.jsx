@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useCart } from '../context/Cartcontext'; // Importa el contexto del carrito
-
+import { useParams } from 'react-router-dom'; // Cambio: Importar useParams para obtener el parámetro id de la URL
 const Pizza = () => {
   const [pizza, setPizza] = useState(null);
   const { addToCart } = useCart(); // Desestructura la función addToCart desde el contexto
-
+  const { id } = useParams(); //Obtener el parámetro id de la URL
   useEffect(() => {
     const fetchPizza = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/pizzas/p001');
+        const response = await fetch(`http://localhost:5000/api/pizzas/${id}`);
         const data = await response.json();
         setPizza(data);
       } catch (error) {
@@ -17,7 +17,7 @@ const Pizza = () => {
     };
 
     fetchPizza();
-  }, []);
+  }, [id]);
 
   if (!pizza) {
     return <div>Loading...</div>;  // Mostrar un mensaje de carga mientras se obtienen los datos
