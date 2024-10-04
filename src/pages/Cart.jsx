@@ -1,10 +1,12 @@
 import React from 'react';
 import { useCart } from '../context/Cartcontext';
+import { useUser } from '../context/UserContext'; // Importamos el UserContext
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
 const Cart = () => {
   const { cart, addToCart, removeFromCart, calculateTotal } = useCart();
+  const { token } = useUser(); // Obtenemos el token del UserContext
 
   return (
     <div>
@@ -27,7 +29,7 @@ const Cart = () => {
                   </Card.Text>
                   <div className="d-flex justify-content-between">
                     <Button variant="outline-primary" size="sm" onClick={() => addToCart(item)}>+</Button>
-                    <Button variant="outline-danger" size="sm" onClick={() => removeFromCart(item.id)}>Remove</Button>
+                    <Button variant="outline-danger" size="sm" onClick={() => removeFromCart(item.id)}>-</Button>
                   </div>
                 </Card.Body>
               </Card>
@@ -36,7 +38,7 @@ const Cart = () => {
         )}
       </div>
       <h3>Total: ${calculateTotal().toLocaleString('es-CL')}</h3>
-      <Button variant="primary">Pay</Button>
+      <Button variant="primary" disabled={!token}>Pay</Button> {/* Deshabilita el botón si token es false */}
     </div>
   );
 };

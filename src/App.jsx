@@ -13,6 +13,7 @@ import Pizza from "./pages/Pizza";
 //import Profile from "./pages/Profile";
 import NotFound from "./pages/NotFound"; 
 import CartProvider from "./context/Cartcontext";
+import UserProvider  from "./context/UserContext";
 
 function App() {
   return (
