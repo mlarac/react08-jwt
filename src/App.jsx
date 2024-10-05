@@ -10,39 +10,41 @@ import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
 import Cart from './pages/Cart';
 import Pizza from "./pages/Pizza";
-//import Profile from "./pages/Profile";
+import Profile from "./components/Profile";
 import NotFound from "./pages/NotFound"; 
 import CartProvider from "./context/Cartcontext";
-import UserProvider  from "./context/UserContext";
+import { useUser } from './context/UserContext'; // Importamos el UserContext
+
+
 
 function App() {
+  const { token } = useUser(); // Obtenemos el token del UserContext
+
   return (
    <>
    <CartProvider>
-   <UserProvider>
+  
       <NavigationBar />
      
       <NavigationBar />
       <Header text="Bienvenido a Pizzería Mamma Mia!" />
       
       <Routes>
+
         {/* Ruta para la página principal */}
         <Route path="/" element={<Home />} />
-        
-        {/* Ruta para el registro */}
-        <Route path="/register" element={<Register />} />
-        
-        {/* Ruta para el login */}
-        <Route path="/login" element={<Login />} />
+
+        <Route path="/register" element={token ? <Navigate to="/" /> : <Register />} />
+        <Route path="/login" element={token ? <Navigate to="/" /> : <Login/>} />
         
         {/* Ruta para el carrito */}
         <Route path="/cart" element={<Cart />} />
         
         {/* Ruta para una pizza específica */}
-        <Route path="/pizza/p001" element={<Pizza />} />
+        <Route path="/pizza/:id" element={<Pizza />} />
         
-        {/* Ruta para el perfil de usuario 
-        <Route path="/profile" element={<Profile />} />*/}
+        {/* Ruta para el perfil de usuario */
+         <Route path="/profile" element={token ? <Profile /> : <Navigate to="/login" />} />   }
         
         {/* Ruta para página 404 */}
         <Route path="/404" element={<NotFound />} />
@@ -52,7 +54,7 @@ function App() {
       </Routes>
       
       <Footer />
-      </UserProvider>
+     
       </CartProvider>
       </>
   );
