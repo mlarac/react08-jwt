@@ -1,18 +1,14 @@
 import React, { createContext, useState, useContext } from 'react';
 
-// Crear el contexto
 const UserContext = createContext();
 
-// Hook para consumir el contexto en otros componentes
 export const useUser = () => useContext(UserContext);
 
-// Proveedor del contexto
 const UserProvider = ({ children }) => {
-  // Estado que almacena el token, por defecto en true
-  //const [token, setToken] = useState(true);
   const [token, setToken] = useState(null); // El token por defecto será null hasta que el usuario inicie sesión
   const [email, setEmail] = useState(null); // El email por defecto será null hasta que se registre o inicie sesión
-  
+  const [profile, setProfile] = useState(null); // Línea agregada: estado para almacenar el perfil del usuario
+
   // Método para hacer login
   const login = async (email, password) => {
     try {
@@ -61,17 +57,40 @@ const UserProvider = ({ children }) => {
     }
   };
 
- // Método para hacer logout
- const logout = () => {
-  setToken(null); // Elimina el token
-  setEmail(null); // Elimina el email
-  console.log('Logout successful');
-};
+  // Método para hacer logout
+  const logout = () => {
+    setToken(null); // Elimina el token
+    setEmail(null); // Elimina el email
+    setProfile(null); // Línea agregada: Limpia el perfil al hacer logout
+    console.log('Logout successful');
+  };
 
+  // Método para obtener el perfil del usuario autenticado
+  const fetchProfile = async () => {  // Línea agregada: nuevo método fetchProfile
+    if (!token) return; // Línea agregada: Verifica si hay un token antes de hacer la petición
+
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/me', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`, // Línea agregada: Enviar el token en los headers
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setProfile(data); // Línea agregada: Almacena el perfil obtenido
+        console.log('Profile fetched successfully:', data);
+      } else {
+        console.error('Failed to fetch profile');
+      }
+    } catch (error) {
+      console.error('Error during profile fetch:', error);
+    }
+  };
 
   return (
-    // Proveer el token y el método logout al contexto
-    <UserContext.Provider value={{ token, email, login, register, logout }}>
+    <UserContext.Provider value={{ token, email, profile, login, register, logout, fetchProfile }}> {/* Línea agregada: Exponer profile y fetchProfile */}
       {children}
     </UserContext.Provider>
   );

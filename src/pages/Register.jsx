@@ -3,15 +3,20 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
+import { useUser } from '../context/UserContext'; // Línea agregada: Importar el contexto de usuario
+import { useNavigate } from 'react-router-dom'; // Línea agregada: Para redirigir después del registro
 
 export const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [variant, setVariant] = useState("info"); 
+  const [variant, setVariant] = useState("info");
 
-  const handleSubmit = (e) => {
+  const { register } = useUser(); // Línea agregada: Desestructurar el método register desde el UserContext
+  const navigate = useNavigate(); // Línea agregada: Hook de React Router para redirigir
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validaciones
@@ -25,9 +30,16 @@ export const Register = () => {
       setMessage("Las contraseñas no coinciden.");
       setVariant("danger");
     } else {
-      // Aquí puedes agregar más lógica, como enviar los datos a una API
-      setMessage("¡Registro exitoso!");
-      setVariant("success");
+      try {
+        await register(email, password); // Línea agregada: Llamar al método register del contexto
+        setMessage("¡Registro exitoso!");
+        setVariant("success");
+        navigate('/profile'); // Línea agregada: Redirigir al perfil después del registro
+      } catch (error) {
+        console.error('Error durante el registro:', error);
+        setMessage("Error en el registro. Intenta nuevamente.");
+        setVariant("danger");
+      }
     }
   };
 
